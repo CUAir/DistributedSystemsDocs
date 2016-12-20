@@ -1,9 +1,9 @@
-.. CUAir Autopilot Documentation documentation master file, created by
+.. CUAir Distributed Systems Documentation documentation master file, created by
    sphinx-quickstart on Mon May  2 11:28:43 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Autopilot documentation
+Distributed Systems Documentation
 =========================================================
 
 Welcome
@@ -31,19 +31,19 @@ Leet Mode
 
 ::
 
-   $ git clone https://github.com/CUAir/Autopilot
-   $ cd Autopilot
-   $ virtualenv venv 
+   $ git clone https://github.com/CUAir/DistributedSystemsDocs/
+   $ cd DistributedSystemsDocs
+   $ virtualenv venv
    $ source venv/bin/activate
    $ pip install -r requirements.txt
    $ cd docs
    $ make html
 
-**Use** 
+**Use**
 
-* To create a page, make a new file called foobar.rst. 
-* Add your page to the table of contents in the file index.rst under the api and groundstation pages. 
-* Edit your page using sphinx markup. 
+* To create a page, make a new file called foobar.rst.
+* Add your page to the table of contents in the file index.rst under the api and groundstation pages.
+* Edit your page using sphinx markup.
 * To see what your page looks like, compile it with ``make html``
 * When you are happy with what the page looks like commit your changes with git (``git add --all; git commit -m "change message"; git push``).
 * The online documentation will update sometime in the next few minutes.
@@ -58,7 +58,7 @@ http://www.sphinx-doc.org/en/stable/rest.html#rst-primer
 Support
 -------
 
-If you are having issues, please slack Troy.
+If you are having issues, please slack Sameer.
 
 License
 -------
@@ -70,12 +70,11 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   api
-   groundstation
-   ardupilot
-   catapult
-   testflight
-   autopilot_configuration
+   groundserver
+   cameraserver
+   gimbalserver
+   zcamserver
+   plaedalus
 
 Indices and tables
 ==================
@@ -83,4 +82,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

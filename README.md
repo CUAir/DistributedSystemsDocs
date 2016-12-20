@@ -1,3 +1,3 @@
-# Autopilot
+# Distributed Systems Documentation
 
-[For some of your autopilot needs](http://cuairautopilot.readthedocs.io/en/latest/)
+[An overview of the Distributed Systems infrastructure.](http://distributed-systems.readthedocs.io/en/latest/)
