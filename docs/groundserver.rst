@@ -16,7 +16,7 @@ Overview
 
 The CUAir ground server is built using the Play web framework in Java. It’s an MVC framework that separates the logic for the view (our frontend), controller (API endpoints that allow clients/servers to communicate with us), and model (interfacing with the database layer, running any algorithms or business logic).
 
-The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably. Full documentation of the 2016-2017 Ground Server API can be found `here<http://docs.cuair20162017groundserverapi.apiary.io/>`_.
+The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably. Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_.
 
 Design
 -------
@@ -102,7 +102,7 @@ The "state" is information that the plane inherently knows that the ground serve
 
 * Camera Server
   * State: None (Ground server can directly change all values pertaining to the camera, therefore they are all settings)
-  * Settings: Everything else (`see the Camera Server section to learn more<http://distributed-systems.readthedocs.io/en/latest/cameraserver.html/>`_)
+  * Settings: Everything else (`see the Camera Server section to learn more <http://distributed-systems.readthedocs.io/en/latest/cameraserver.html/>`_)
 
 
 Controllers
@@ -113,11 +113,11 @@ The controller abstractions are meant to interact directly with Java’s Play fr
 Installation for Development
 ----------------------------
 
-1. Install `Java 8<http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html/>`_
-2. Install `git<https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/>`_
-4. Install `VirtualBox<http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html/>`_
-5. Install `Vagrant<https://www.vagrantup.com/downloads.html/>`_
-6. Access ground server through vagrant::
+1. Install `Java 8 <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html/>`_
+2. Install `git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/>`_
+3. Install `VirtualBox <http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html/>`_
+4. Install `Vagrant <https://www.vagrantup.com/downloads.html/>`_
+5. Access ground server through vagrant::
 
    git clone https://github.com/CUAir/ground-server.git
    cd ground-server/
@@ -125,9 +125,9 @@ Installation for Development
    vagrant ssh                # Now you're on the VM!
    cd ground-server/
 
-7. Start the ground server::
+6. Start the ground server on port 9000 ::
 
-   ./activator run            # Runs on port 9000
+   ./activator run
 
 To start tests, run ::
 
@@ -143,10 +143,10 @@ To access the database on VM, run ::
    exit
 
 
-Front-End
+Front-End Overview
 -------
 
-The ground server front-end is built primarily in `React<https://facebook.github.io/react/docs/getting-started.html>`_ and it’s in ``ground-server/app/assets/javascripts``. However, some parts, specifically those that interact with the backend use `Nuclear<https://optimizely.github.io/nuclear-js/>`_ and most of the stylesheets are written in `LESS<http://lesscss.org/>`_.
+The ground server front-end is built primarily in `React <https://facebook.github.io/react/docs/getting-started.html>`_ and it’s in ``ground-server/app/assets/javascripts``. However, some parts, specifically those that interact with the backend use `Nuclear <https://optimizely.github.io/nuclear-js/>`_ and most of the stylesheets are written in `LESS <http://lesscss.org/>`_.
 
 Pages
 ^^^^^
@@ -155,19 +155,24 @@ Pages
 
 These are the individual pages of the frontend that you will see and access. They’re made of the components described in the following section.
 
-* *App*: the default page and is located in ``/javascripts`` rather than in ``/javascripts/pages``. If you want to add any components that are applied to all pages, put it there.
+* **App**: the default page and is located in ``/javascripts`` rather than in ``/javascripts/pages``. If you want to add any components that are applied to all pages, put it there.
+
   * Components: Drawer, Header
 
-* *Tag*: the first page that you will encounter when starting the server. Meant primarily for tagging targets from images that are fed from the plane. As of now, it also includes starting and stopping the plane’s mission status.
+* **Tag**: the first page that you will encounter when starting the server. Meant primarily for tagging targets from images that are fed from the plane. As of now, it also includes starting and stopping the plane’s mission status.
+
   * Components: MissionControl, ImageViewer, ColorSelect, ShapeSelect, TypeSelect
 
-* *Merging*: for merging target sightings with targets and creating new targets. All targets are shown and can be deleted.
+* **Merging**: for merging target sightings with targets and creating new targets. All targets are shown and can be deleted.
+
   * Components: ColorSelect, ShapeSelect, TypeSelect
 
-* *CameraSettings*: controls the camera’s settings and shows what the resulting images look like.
+* **CameraSettings**: controls the camera’s settings and shows what the resulting images look like.
+
   * Components: ImageViewer
 
-* *GimbalAirdrop*: controls the gimbal and airdrop functions.
+* **GimbalAirdrop**: controls the gimbal and airdrop functions.
+
   * Components: Airdrop, Gimbal
 
 
@@ -177,36 +182,46 @@ Components
 
 The individual UI elements of the system that are built as React classes.
 
-* *ColorSelect*: drop down menu to select the color of the target and also assigns a unique id for the selected color in the following format: ``color_select_<integer between 0 and 100,000>_<integer between 0 and 100,000>``
+* **ColorSelect**: drop down menu to select the color of the target and also assigns a unique id for the selected color in the following format: ``color_select_<integer between 0 and 100,000>_<integer between 0 and 100,000>``
+
   * Used in: Merge, Tag
 
-* *Drawer*: manages everything in the page below the header. Everything that renders on the page besides the header is wrapped inside of the class “main” which is part of the component. Also sets the sidebar on or off.
+* **Drawer**: manages everything in the page below the header. Everything that renders on the page besides the header is wrapped inside of the class “main” which is part of the component. Also sets the sidebar on or off.
+
   * Used in: all pages (it’s in App)
 
-* *Header*: the top bar of the page and includes a button to give access the sidebar.
+* **Header**: the top bar of the page and includes a button to give access the sidebar.
+
   * Used in: all pages (it’s in App)
 
-* *ImageViewer*: the primary way images from the plane are viewed. Also includes the target selector tool (the big circle that is drawn around a target) for manual detection classification and localization (only active in Tag).
+* **ImageViewer**: the primary way images from the plane are viewed. Also includes the target selector tool (the big circle that is drawn around a target) for manual detection classification and localization (only active in Tag).
+
   * Used in: CameraSettings, Tag
 
-* *MissionControl*: displays and sets the plane’s mission status through AJAX calls with the API. Note: due to the way the API works, setting the mission status to COMPLETED will prevent any further changes to the mission status. Also, whoever works on this next should use Nuclear instead of AJAX if they can figure out Nuclear.
+* **MissionControl**: displays and sets the plane’s mission status through AJAX calls with the API. Note: due to the way the API works, setting the mission status to COMPLETED will prevent any further changes to the mission status. Also, whoever works on this next should use Nuclear instead of AJAX if they can figure out Nuclear.
+
   * Used in: Tag
 
-* *ShapeSelect*: drop down menu to select the shape of the target and also assigns a unique id for the selected shape in the following format: ``shape_select_<integer between 0 and 100,000>_<integer between 0 and 100,000>``
+* **ShapeSelect**: drop down menu to select the shape of the target and also assigns a unique id for the selected shape in the following format: ``shape_select_<integer between 0 and 100,000>_<integer between 0 and 100,000>``
+
   * Used in: Merge, Tag
 
-* *Sidebar*: main navigation tool within ground server. Opening and closing is controlled by Drawer.
+* **Sidebar**: main navigation tool within ground server. Opening and closing is controlled by Drawer.
+
   * Used in: all pages (it’s in App)
 
-* *TypeSelect*: drop down menu to select the type (alphanum or emergent) of the target and also assigns a unique id for the selected type in the following format: ``type_select_< integer between 0 and 100,000>_<some between 0 and 100,000>``
+* **TypeSelect**: drop down menu to select the type (alphanum or emergent) of the target and also assigns a unique id for the selected type in the following format: ``type_select_< integer between 0 and 100,000>_<some between 0 and 100,000>``
+
   * Used in: Merge, Tag
 
-The following two components are in ``ground-server/app/assets/javascripts/pages/gimbalAirdrop``
+The following two components are in ``ground-server/app/assets/javascripts/pages/gimbalAirdrop``:
 
-* *Airdrop*: controls the airdrop’s settings and allows you to arm and set the airdrop
+* **Airdrop**: controls the airdrop’s settings and allows you to arm and set the airdrop
+
   * Used in: GimbalAirdrop
 
-* *Gimbal*: controls the gimbal’s settings
+* **Gimbal**: controls the gimbal’s settings
+
   * Used in: GimbalAirdrop
 
 Adding a Component
@@ -239,7 +254,7 @@ Ground Server Cannot Connect to Plane Servers
 * Make sure plane servers are running
 * Make sure plane you’ve updated the /ground-server/conf/application.conf file with NUC IP address and plane server port number
 * Make sure you’ve correctly identified plane server port number
-* ``fping -ag 10.148.0.0/24``(List all IP on the local network)
+* ``fping -ag 10.148.0.0/24`` (List all IP on the local network)
 
 Ground Server Laptop Cannot Ping NUC
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
