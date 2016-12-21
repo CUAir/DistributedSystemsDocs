@@ -9,16 +9,16 @@ Camera Server
 
 .. contents::
 
-This section provides the use and design of the distributed systems camera server.
+This section provides the use and specifications of the distributed systems camera server.
 
 Overview
 ----------------
 
-The camera server is designed to capture images and manage camera settings. Image transferring is handled by the camera server posting the ground server with an image.
+The CUAir camera server is designed to capture images and manage camera settings. Image transferring is handled by the camera server posting the ground server with an image.
 
-**Full documentation of the 2016-2017 Ground Server API can be found** `here <http://docs.cuair20162017cameraserverapi.apiary.io/>`_.
+**Full documentation of the 2016-2017 Camera Server API can be found** `here <http://docs.cuair20162017cameraserverapi.apiary.io/>`_.
 
-The CUAir camera server is built using the NodeJS web framework. The camera that will be used for the 2017 SUAS Competition is the `Z-Cam <http://z-cam.com/>`_.
+The camera server is built using the NodeJS web framework. The camera that will be used for the 2017 SUAS Competition is the `Z-Cam <http://z-cam.com/>`_.
 
 Installation for Development
 ----------------------------

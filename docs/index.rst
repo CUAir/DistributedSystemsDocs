@@ -72,8 +72,9 @@ Contents:
 
    groundserver
    cameraserver
-   gimbalserver
-   zcamserver
+   airdropserver
+   nuc
+   geotag
    plaedalus
 
 Indices and tables
