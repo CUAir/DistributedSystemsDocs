@@ -11,8 +11,9 @@ Test Flight
 
 This section outlines the distributed systems test flight procedure.
 
-192.168.0.21 - NUC is static IP
-192.168.0.50 - attena tracker
+**192.168.0.21 - NUC is static IP**
+
+**192.168.0.50 - attena tracker**
 
 Pre-arrival Checklist
 -----------------------

@@ -20,6 +20,61 @@ The CUAir camera server is designed to capture images and manage camera settings
 
 The camera server is built using the NodeJS web framework. The camera that will be used for the 2017 SUAS Competition is the `Z-Cam <http://z-cam.com/>`_.
 
+Design Decisions
+------------------------
+
+* Decision to use Z-Cam
+
+  * Were able to capture high quality images at altitude on Atlas
+  * Were able to mitigate rolling shutter effects with a simulation on the ground using the Atlas’ vibrations
+  * Communicated with electrical to ensure that the OBC could send requests to the Z-Cam over its WiFi while simultaneously running a server on electrical’s WiFi
+  * Simplicity of HTTP API far surpasses Point Grey’s poor SDK
+  * Reliability of capturing far surpases Point Grey’s
+
+* Decision to use Node.js
+
+  * High performance and inherently concurrent (important for continuously accessing images from the camera over HTTP)
+  * Conducive to developing HTTP API’s
+  * Code brevity
+  * Easy to use (relatively)
+
+* Decision to use Express
+
+  * Easier interface for developing HTTP API’s
+  * Code brevity
+
+* Decision to use Sqlite
+
+  * Size of settings and state databases is very small so the simplicity of Sqlite outweighs its lack of efficiency at scale
+
+Field of View
+---------------
+
+* :math:`h` : half the height of the lens
+
+* :math:`f` : focal length
+
+Horizontal No Zoom
+^^^^^^^^^^^^^^^^^^^^
+
+:math:`2 \times \arctan{\left(\frac{18}{22.75}\right)} = 76.7° \ (approx. \ 80°)`
+:math:`2 \times \arctan{\left(\frac{h}{f}\right)} = 2 \times \arctan{\left(\frac{.375”}{12mm}\right)} = 2 \times \arctan{\left(\frac{.375}{0.472441}\right)} = 76.88° \ (approx. \ 80°)`
+
+Horizontal Full Zoom
+^^^^^^^^^^^^^^^^^^^^
+
+:math:`2 \times \arctan{\left(\frac{18}{63.3}\right)} = 31.75° \ (approx. \ 30°)`
+:math:`2 \times \arctan{\left(\frac{h}{f}\right)} = 2 \times \arctan{\left(\frac{.375”}{32mm}\right)} = 2 \times \arctan{\left(\frac{.375}{1.25984}\right)} = 33.15° \ (approx. \ 30°)`
+
+Vertical No Zoom
+^^^^^^^^^^^^^^^^^^^^
+
+:math:`2 \times \arctan{\left(\frac{18}{31.5}\right)} = 59.49° \ (approx. \ 60°)`
+
+Vertical Full Zoom
+^^^^^^^^^^^^^^^^^^^^
+:math:`2 \times \arctan{\left(\frac{18}{85.5}\right)} = 23.777°`
+
 Installation for Development
 ----------------------------
 

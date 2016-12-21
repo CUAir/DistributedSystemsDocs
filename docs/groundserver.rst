@@ -20,8 +20,113 @@ The CUAir ground server is designed to fulfill two tasks: target detection/local
 
 The ground server is built using the Play web framework in Java. It’s an MVC framework that separates the logic for the view (our frontend), controller (API endpoints that allow clients/servers to communicate with us), and model (interfacing with the database layer, running any algorithms or business logic).
 
+Ground Server Features Overview
+-------------------------------- 
 
-Design
+* Tagging (Tagging page of UI):
+
+  * TargetSighting creation
+
+    * User tags an image by right clicking, moving the mouse until the red circle covers the entire target sighting. Make sure that red radius line is pointed towards the direction that the target is facing, and then left click again.
+    * Check Target sighting in postgres database:
+
+      * has an associated geotag
+      * tagged portion of image is displayed in target sighting object
+
+  * User enters the alphanumeric character, alpha color, shape, and shape color of the target into the respective fields within each target sighting object.
+  * User can
+
+      * save a target sighting
+
+        * Saved target sightings from tagging page are displayed on merging page with the corresponding target information (alpha, alpha color, shape, shape color)
+
+      * zoom in and out of image on tagging page by left clicking on the image
+      * remove target sightings
+      * use ‘next’ and ‘previous’ buttons to move from one image to the next
+      * only view the images sent to his computer, not another client’s computer
+      * receive a new image from the ground server upon clicking ‘next’ when viewing his most recent image
+
+        * This creates a new assignment (assigned to MDLC) in the database
+
+  * When user is done processing (clicks next for another image), assignment is marked as done
+  * All images sent to the ground are processed
+
+* Merging (Merging page of UI):
+
+  * All unassigned target sightings are displayed in the right sidebar
+  * User can drag a sighting from the sidebar to an empty target or the “new target” field, and the sighting will be displayed in the target with the correct target information displayed.
+  * User can:
+
+    * drag a sighting to an existing target
+
+      * Target object will be updated in postgres database
+      * It’s corresponding geotag is also updated
+
+    * un-assign a sighting from a target by dragging the sighting from a target to the unassigned target list.
+    * create an empty new target
+
+      * Target object will be created in postgres database
+
+    * remove one target at a time by clicking the “x”
+    * save a target
+    * export the targets (all at once) by clicking “export targets” at the bottom of the page, creating a .txt file with all of the target information
+
+* Camera (+ Camera page of UI):
+
+  * User can change (within appropriate ranges):
+
+    * Brightness
+    * Shutter Speed
+    * Gain
+    * Frame Rate
+    * Whether the camera is capturing photos
+
+    * User can save the camera settings and this will update the settings of the actual camera
+    * Camera settings objects are being created in postgres database
+    * User can see the most recent image captured by the camera
+    * If camera is capturing images, they are being saved to /ground-server/plane/files/plane/
+    * Image objects are being created in the postgres database
+    * Corresponding telemetry and gimbal data objects are being created in the postgres database
+
+* Airdrop Settings (+ Airdrop and Gimbal page of UI)
+
+  * User can indicate:
+
+    * Arm status
+    * Target latitude
+    * Target longitude
+    * Target threshold
+
+  * User can save airdrop settings
+  * When user updates above fields, these settings are sent up to the airdrop server
+  * Airdrop setting object is created in database
+  * User can enable a manual airdrop override
+  * User can override the airdrop (when arm status is true and manual airdrop override enabled) and the payload is immediately dropped
+
+* Gimbal Settings (+ Airdrop and Gimbal page of UI)
+
+  * User can indicate:
+
+    * The longitude and latitude of a coordinate on the ground that the camera should point at (only valid when mode is gps)
+    * The pitch and roll of the gimbal (only valid when mode is angle)
+    * The mode of the gimbal (‘retract’, ‘ground’, ‘gps’, ‘angle’)
+
+  * User can save gimbal settings
+  * Gimbal settings object will be created in database
+  * Settings will be sent up to gimbal server
+
+* Geotag test (only during test flights)
+
+  * Record GPS coordinates of targets in field
+  * Make sure target GPS coordinates are within 50ft
+
+* Reconnection
+
+  * Settings are queued when ground server disconnected from plane servers
+  * Once connection re-established, settings are sent back up to plane
+
+
+System Design
 -------
 
 Models

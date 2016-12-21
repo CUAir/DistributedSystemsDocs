@@ -73,7 +73,6 @@ Contents:
    groundserver
    cameraserver
    airdropserver
-   nuc
    geotag
    testflight
 
