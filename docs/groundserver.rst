@@ -14,7 +14,9 @@ This section provides the use and design of the distributed systems ground serve
 Overview
 ----------------
 
-The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably. Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_.
+The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably.
+
+**Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_.**
 
 The CUAir ground server is built using the Play web framework in Java. It’s an MVC framework that separates the logic for the view (our frontend), controller (API endpoints that allow clients/servers to communicate with us), and model (interfacing with the database layer, running any algorithms or business logic).
 
@@ -124,12 +126,13 @@ Installation for Development
 2. Install `git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/>`_
 3. Install `VirtualBox <http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html/>`_
 4. Install `Vagrant <https://www.vagrantup.com/downloads.html/>`_
+
 5. Access ground server through vagrant ::
 
    git clone https://github.com/CUAir/ground-server.git
    cd ground-server/
    vagrant up
-   vagrant ssh                # Now you're on the VM!
+   vagrant ssh # Now you're on the VM!
    cd ground-server/
 
 6. Start the ground server on port 9000 ::

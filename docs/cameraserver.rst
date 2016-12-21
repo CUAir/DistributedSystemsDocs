@@ -14,7 +14,9 @@ This section provides the use and design of the distributed systems camera serve
 Overview
 ----------------
 
-The camera server is designed to capture images and manage camera settings. Image transferring is handled by the camera server posting the ground server with an image. Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017cameraserverapi.apiary.io/>`_.
+The camera server is designed to capture images and manage camera settings. Image transferring is handled by the camera server posting the ground server with an image.
+
+**Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017cameraserverapi.apiary.io/>`_.**
 
 The CUAir camera server is built using the NodeJS web framework. The camera that will be used for the 2017 SUAS Competition is the `Z-Cam <http://z-cam.com/>`_.
 
@@ -30,6 +32,7 @@ Using the Web Front End
 
 1. Install `NodeJS <https://nodejs.org/en/download/>`_
 2. Install `git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/>`_
+
 3. Access the Z-Cam server ::
 
    git clone https://github.com/CUAir/z-cam-server.git
@@ -37,12 +40,14 @@ Using the Web Front End
    git checkout capturing
    npm install
 
+
 4. Turn on the Z-Cam
 5. Remove lens (but do not lose it!)
 6. Set the camera zoom to full zoom or minimum zoom (but record which one you are using for testing purposes!)
 7. Take one picture manually pointing at a very far distances (this focuses the camera)
 8. Navigate to the settings and check that WiFi is on
 9. Connect to Z-Cam’s WiFi network on your computer (password: 12345678)
+
 10. Start the web server ::
 
    npm start
