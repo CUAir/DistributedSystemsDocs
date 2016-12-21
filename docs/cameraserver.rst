@@ -33,7 +33,8 @@ Using the Web Front End
 1. Install `NodeJS <https://nodejs.org/en/download/>`_
 2. Install `git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/>`_
 
-3. Access the Z-Cam server ::
+3. Access the Z-Cam server
+::
 
    git clone https://github.com/CUAir/z-cam-server.git
    cd z-cam-server/
@@ -48,7 +49,8 @@ Using the Web Front End
 8. Navigate to the settings and check that WiFi is on
 9. Connect to Z-Cam’s WiFi network on your computer (password: 12345678)
 
-10. Start the web server ::
+10. Start the web server
+::
 
    npm start
 
@@ -74,7 +76,7 @@ Direct Requests Using Postman
 13. Please submit any issues with the front end to our `Github repository <https://github.com/CUAir/z-cam-server/>`_ and/or contact Ram
 
 Z-Cam Server API Overview
--------
+--------------------------
 
 Properties
 ^^^^^^^^^^
