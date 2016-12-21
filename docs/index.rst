@@ -75,7 +75,7 @@ Contents:
    airdropserver
    nuc
    geotag
-   plaedalus
+   testflight
 
 Indices and tables
 ==================
