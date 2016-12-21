@@ -14,9 +14,10 @@ This section provides the use and design of the distributed systems ground serve
 Overview
 ----------------
 
+The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably. Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_.
+
 The CUAir ground server is built using the Play web framework in Java. It’s an MVC framework that separates the logic for the view (our frontend), controller (API endpoints that allow clients/servers to communicate with us), and model (interfacing with the database layer, running any algorithms or business logic).
 
-The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably. Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_.
 
 Design
 -------
@@ -92,16 +93,22 @@ Settings and States
 
 The "state" is information that the plane inherently knows that the ground server cannot directly change but can certainly query for. The plane settings, however, are directives of the plane and can be changed by the ground server. A change in setting can and does induce a change in state. The state and the settings breakdown for the plane servers as follows:
 
-* Airdrop Server
+* **Airdrop Server**
+
   * State: Whether the drop has occured or not (the ground server can try to arm/override but only the plane knows whether the physical mechanism was activated)
+
   * Settings: Target latitude and longitude, acceptable threshold for drop accuracy, arm and disarm, override drop
 
-* Gimbal Server
+* **Gimbal Server**
+
   * State: The quaternion values that the gimbal has assumed
+
   * Settings:  Gimbal mode (retract, ground, gps, angle) and the subsequent values
 
-* Camera Server
+* **Camera Server**
+
   * State: None (Ground server can directly change all values pertaining to the camera, therefore they are all settings)
+
   * Settings: Everything else (`see the Camera Server section to learn more <http://distributed-systems.readthedocs.io/en/latest/cameraserver.html/>`_)
 
 
@@ -117,7 +124,7 @@ Installation for Development
 2. Install `git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git/>`_
 3. Install `VirtualBox <http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html/>`_
 4. Install `Vagrant <https://www.vagrantup.com/downloads.html/>`_
-5. Access ground server through vagrant::
+5. Access ground server through vagrant ::
 
    git clone https://github.com/CUAir/ground-server.git
    cd ground-server/
