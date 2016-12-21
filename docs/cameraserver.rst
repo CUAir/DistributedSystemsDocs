@@ -16,7 +16,7 @@ Overview
 
 The camera server is designed to capture images and manage camera settings. Image transferring is handled by the camera server posting the ground server with an image.
 
-**Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017cameraserverapi.apiary.io/>`_.**
+**Full documentation of the 2016-2017 Ground Server API can be found** `here <http://docs.cuair20162017cameraserverapi.apiary.io/>`_.
 
 The CUAir camera server is built using the NodeJS web framework. The camera that will be used for the 2017 SUAS Competition is the `Z-Cam <http://z-cam.com/>`_.
 

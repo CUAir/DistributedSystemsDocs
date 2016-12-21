@@ -16,7 +16,7 @@ Overview
 
 The ground server is designed to fulfill two tasks: target detection/localization and delivering a care package (airdrop). In order to fulfill these tasks, the ground server must keep track of and store various settings and states. More importantly, it should be able to handle client requests reliably.
 
-**Full documentation of the 2016-2017 Ground Server API can be found `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_. **
+**Full documentation of the 2016-2017 Ground Server API can be found** `here <http://docs.cuair20162017groundserverapi.apiary.io/>`_.
 
 The CUAir ground server is built using the Play web framework in Java. It’s an MVC framework that separates the logic for the view (our frontend), controller (API endpoints that allow clients/servers to communicate with us), and model (interfacing with the database layer, running any algorithms or business logic).
 
@@ -136,18 +136,21 @@ Installation for Development
    vagrant ssh # Now you're on the VM!
    cd ground-server/
 
-6. Start the ground server on port 9000 ::
+6. Start the ground server on port 9000
+::
 
    ./activator run
 
-To start tests, run ::
+To start tests, run
+::
 
    rm -rf conf/evolutions/*
    ./activator clean
    ./activator compile
    ./activator test
 
-To access the database on VM, run ::
+To access the database on VM, run
+::
 
    sudo -i -u postgres
    psql -U postgres plaedalus
