@@ -73,7 +73,6 @@ Contents:
    groundserver
    cameraserver
    airdropserver
-   geotag
    testflight
 
 Indices and tables

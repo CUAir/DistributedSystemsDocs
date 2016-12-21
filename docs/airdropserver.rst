@@ -16,7 +16,7 @@ Overview
 
 The CUAir airdrop server is responsible for delivering a care package as part of the search-and-rescue mission. As such, the airdrop server is constantly running and communicating with both the ground station server and the autopilot server.
 
-**Full documentation of the 2015-2016 Airdrop Server API can be found** `here <http://docs.cuair20152016airdrop.apiary.io/>`_.
+**Full documentation of the 2016-2017 Airdrop Server API can be found** `here <http://docs.cuair20152016airdrop.apiary.io/>`_.
 
 The airdrop server is built using the Flask web framework in Python.
 
@@ -33,12 +33,12 @@ There are three different modes that the user can set. When the server is in def
 
 The third mode, override, schedules the drop job to execute at the current time. The drop job, when executed, communicates with the airdrop board and to set the angles of the mechanism to “open”, which drops the payload.
 
-Also see the presentation give on Airdrop `here <https://docs.google.com/presentation/d/1bkWt93OvCaJGoPV4hLBj9kzwlWbTHkdznSIj07GO1pI/edit/>`_
+Also, see the presentation given on Airdrop `here <https://docs.google.com/presentation/d/1bkWt93OvCaJGoPV4hLBj9kzwlWbTHkdznSIj07GO1pI/edit/>`_.
 
 Connecting to the NUC
 -------------------------
 
-Turning the NUC ON
+Turning the NUC On
 ^^^^^^^^^^^^^^^^^^^^^
 What you need:
 
