@@ -127,11 +127,12 @@ Ground Server Features Overview
 
 
 System Design
--------
+-------------
 
 Models
 ^^^^^^^
 
+The models define the data and the relationship between data.
 Below is a class diagram of the ground server models. One can see the one-to-one as well as many-to-one relationships (more in next section).
 
 .. image:: images/ground-server-diagram.png
@@ -162,23 +163,28 @@ While this accurately represents the relationship among our abstractions, our so
 
     * Image
 
-In this approach, we see that there is a “many-to-one” relationship between TargetSighting and Assignment, and between Assignment and Image. The reason we take this approach rather than “one-to-many” is that for one, many-to-one is much simpler and cleaner to serialize into an SQL database. Additionally, this design accurately represents the underlying operations of the ground server. Whether or not TargetSightings are added into an Assignment, Assignment is only concerned with the Image to which it was assigned. Similarly, Image should not bother with Assignments, as it is only concerned with the image data itself.
+In this approach, we see that there is a “many-to-one” relationship between TargetSighting and Assignment, and between Assignment and Image. The reason we take this approach rather than “one-to-many” is that for one, many-to-one is much simpler and cleaner to serialize into an SQL database. For example, if a single row of the Assignment table stored a single Assignment, we can have one column that is a foreign key to the corresponding row of the Image table. In SQL, we cannot create a schema where we store a list of foreign keys of all the TargetSightings that were created from that assignment. Additionally, this design accurately follows the principle of abstraction in Object Oriented Programming. An Image object only knows about image data, so the process of taking images and scheduling them to different clients is abstracted out from the Image object because the Assignment object contains that information. Similary, the Assignment object knows about the Image that was given to a particular client, but the objects that are found in that image are abstracted out from the Assignment object because the TargetSighting object contains that information. 
 
 The ground server models are used to store data in a SQL database through serialization. The ground server utilizes `Ebean <http://ebean-orm.github.io/>`_ to handle this serialization. Ebean is an Object Relational Mapping (ORM), which is a Java library that allows us to execute SQL commands on our database tables.
+
+Controllers
+^^^^^^^^^^^
+
+The controllers in an MVC framework are responsible for handling requests from the view (frontend application) and fetching the desired information from the desired model. The play framework has a routes file that creates a mapping from an HTTP endpoint to the Java method that handles the response to that endpoint. Therefore, controller methods take the HTTP request, fetch the corresponding information, and wrap the information into an HTTP response. The play framework makes it easy to fetch data from the HTTP request (like the request's body and uri), and package the desired information into an HTTP response. The controller methods also utilize the client and dao methods, which we will talk about below.
 
 Database Accessor Objects
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For each model in the ground server, there exists a database accessor object, or DAO. DAOs utilize Ebean methods to retrieve data from the SQL database. DAOs are an abstraction around accessing the the database from the controller, as many of the methods used to retrieve data are similar across the controllers (get, create, delete, update). The DAO combines these methods into one interface that allows us to handle these requests for any CUAirModel. When we want to make more complicated requests, we can simply extend the DAO and add the necessary method. (i.e. retrieving all target sightings for a certain image). The DAO abstraction is also useful as it prevents us from accessing the database directly. So, if we need to migrate to another ORM or library, we will simply need to modify the DAO rather than the controller code, which would be more complex.
+For each model in the ground server, there exists a database accessor object, or DAO. DAOs utilize Ebean methods to retrieve data from the SQL database. DAOs are an abstraction around accessing the the database from the controller, as many of the methods used to retrieve data are similar across the controllers (get, create, delete, update). The DatabaseAccessor class combines these methods into one interface that allows us to handle these requests for any CUAirModel. When we want to make more complicated requests, we can simply extend the DatabaseAccessor class and add the necessary method (i.e. retrieving all target sightings for a certain image). The DAO abstraction is also useful as it prevents controllers from accessing the database directly. So, if we need to migrate to another ORM or library, we will simply need to modify the DAOs rather than the controller code, which would be more complex. By abstracting out database calls into it's own logical component, our ground station is more modular. 
 
 Clients
 ^^^^^^^
 
-The client abstractions are designed to process requests to get and set settings and state of the plane servers (Gimbal, Camera, Airdrop, Autopilot). Due to the possibility of a failed connection, the client abstractions include threads separate to the application thread that are meant to continue trying to send requests up to the server until a non-timeout response is received.
+During the competition, the ground server has to send data to various servers (our servers on the plane and the judge server). The client abstractions are designed to create requests to get and set settings and state of the plane servers (Gimbal, Camera, Airdrop, Autopilot) and send target data to the judge server. Due to the possibility of a failed connection, the client abstractions include threads separate to the application thread that are meant to continue trying to send requests to the other server until a non-timeout response is received.
 
-The underlying pattern with the Client abstractions is that each server on the plane (Gimbal, Airdrop, Camera) contains a client class which handles requests to set the settings, as well as to get the settings and/or state.
+The underlying pattern with the Client abstractions is that we have a client class for each server on the plane (Gimbal, Airdrop, Camera).
 
-ImageClient is a unique case which involves obtaining information from Autopilot and the Gimbal in order to get the telemetry data for a particular image. Since all of the plane servers are on the same onboard computer, they have the same timestamp. This plane timestamp, therefore, can be taken from the Image and used in the queries in AutopilotClient and GimbalClient. ImageClient runs two parallel threads which attempt to get autopilot telemetry data and the gimbal state for an image, respectively.
+ImageClient is a unique case which involves obtaining information from Autopilot and the Gimbal in order to get the telemetry data for a particular image. Since all of the plane servers are on the same onboard computer, any timestamps that each server makes are all relative to the same clock. This plane timestamp, therefore, can be taken from the Image and used in the queries in AutopilotClient and GimbalClient in order to get the gimbal data and autopilot data at around the time when the picture was taken. ImageClient runs two parallel threads which attempt to get autopilot telemetry data and the gimbal state for an image, respectively.
 
 Client Class Diagram
 ********************
@@ -196,7 +202,7 @@ AutopilotClient simply gets autopilot telemetry data at a particular timestamp a
 ImageClient is a unique case which involves obtaining information from Autopilot and the Gimbal in order to get the telemetry data for a particular image. Since all of the servers are on the same computer, they have the same timestamp. This timestamp, therefore, can be taken from the Image and queried for in AutopilotClient and GimbalClient. ImageClient runs two parallel threads which attempt to get autopilot telemetry data and the gimbal state, respectively.
 
 Settings and States
-******************
+*******************
 
 The "state" is information that the plane inherently knows that the ground server cannot directly change but can certainly query for. The plane settings, however, are directives of the plane and can be changed by the ground server. A change in setting can and does induce a change in state. The state and the settings breakdown for the plane servers as follows:
 
@@ -218,11 +224,6 @@ The "state" is information that the plane inherently knows that the ground serve
 
   * Settings: Everything else (`see the Camera Server section to learn more <http://distributed-systems.readthedocs.io/en/latest/cameraserver.html/>`_)
 
-
-Controllers
-^^^^^^^^^^
-
-The controller abstractions are meant to interact directly with Java’s Play framework. (`More information on Play specifications can be found here <https://www.playframework.com/documentation/2.5.x/Home/>`_). They utilize the client and dao methods in order to process client requests and return a meaningful response.
 
 Installation for Development
 ----------------------------
@@ -263,7 +264,7 @@ To access the database on VM, run
 
 
 Front-End Overview
--------
+------------------
 
 The ground server front-end is built primarily in `React <https://facebook.github.io/react/docs/getting-started.html>`_ and it’s in ``ground-server/app/assets/javascripts``. However, some parts, specifically those that interact with the backend use `Nuclear <https://optimizely.github.io/nuclear-js/>`_ and most of the stylesheets are written in `LESS <http://lesscss.org/>`_.
 
@@ -367,7 +368,7 @@ Troubleshooting
 ----------------
 
 Ground Server Cannot Connect to Plane Servers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Make sure laptop can ping NUC
 * Make sure plane servers are running
@@ -383,7 +384,7 @@ Ground Server Laptop Cannot Ping NUC
 * Make sure the NUC is turned on
 
 Cannot Connect to MDLC UI From My Laptop
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Make sure laptop is connected to switch
 * Make sure ground server laptop is connected to switch
