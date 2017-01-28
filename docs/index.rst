@@ -73,6 +73,7 @@ Contents:
    groundserver
    cameraserver
    airdropserver
+   gimbalserver
    testflight
 
 Indices and tables
